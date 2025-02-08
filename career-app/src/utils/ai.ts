@@ -1,12 +1,21 @@
 // utils/ai.ts
+import { ITest } from "@/models/Test";
 import OpenAI from "openai";
-import { NextRequest, NextResponse } from "next/server";
 
 const openai = new OpenAI({
-    apiKey: process.env.OPENAI_API_KEY,
+    apiKey: process.env.NEXT_PUBLIC_OPENAI_API_KEY,
 });
 
-export async function getCareerRecommendations(testResults: any) {
+/**
+ * Fetches career recommendations based on test results using OpenAI's GPT model.
+ * @param testResults - An array of test results with categories and scores.
+ * @param professions - An array of professions with names and image links.
+ * @returns A sorted array of recommended professions.
+ */
+export async function getCareerRecommendations(
+    testResults: (ITest & { results: string[] })[],
+    professions: { name: string; link: string }[]
+): Promise<{ name: string; link: string }[]> {
     try {
         const response = await openai.chat.completions.create({
             model: "gpt-4o",
@@ -17,14 +26,28 @@ export async function getCareerRecommendations(testResults: any) {
                 },
                 {
                     role: "user",
-                    content: `Based on the following test results, recommend suitable careers: ${JSON.stringify(testResults)}`,
+                    content: `
+                        Based on the following test results, recommend suitable careers from the provided list:
+
+                        Test Results:
+                        ${JSON.stringify(testResults)}
+
+                        Professions:
+                        ${JSON.stringify(professions)}
+                    `,
                 },
             ],
         });
 
-        return response.choices[0].message.content;
+        // Parse the AI's response into an array of recommended professions
+        const recommendedProfessions = JSON.parse(response.choices[0].message.content || "[]");
+
+        // Match the recommendations with the professions array
+        return professions.filter((profession) =>
+            recommendedProfessions.includes(profession.name)
+        );
     } catch (error) {
         console.error("Error getting career recommendations:", error);
-        return null;
+        return [];
     }
 }

@@ -1,18 +1,15 @@
-import dbConnect from '@/utils/db';
+
 import { Schema, model, models, Document, Types } from 'mongoose';
 
-await dbConnect();
 
-// 1. Define the Interface
-interface IUser extends Document {
+export interface IUser extends Document {
     name: string;
     email: string;
     password: string;
     role: 'student' | 'teacher' | 'parent' | 'admin';
     testsTaken: {
         testId: Types.ObjectId;
-        score: number;
-        results: Record<string, unknown>;
+        results: string[];
     }[];
     children: Types.ObjectId[]; // References to User documents
     notifications: {
@@ -21,7 +18,6 @@ interface IUser extends Document {
     }[];
 }
 
-// 2. Create the Schema
 const userSchema = new Schema<IUser>({
     name: { type: String, required: true },
     email: { type: String, unique: true, required: true },
@@ -30,8 +26,7 @@ const userSchema = new Schema<IUser>({
     testsTaken: [
         {
             testId: { type: Schema.Types.ObjectId, ref: 'Test', required: true },
-            score: { type: Number, required: true },
-            results: { type: Schema.Types.Mixed, required: true },
+            results: { type: [{ type: String }], required: true },
         },
     ],
     children: [{ type: Schema.Types.ObjectId, ref: 'User' }],

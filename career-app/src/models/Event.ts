@@ -1,7 +1,5 @@
-import dbConnect from '@/utils/db';
+// import dbConnect from '@/utils/db';
 import mongoose, { Schema, Document } from 'mongoose';
-
-await dbConnect();
 
 interface IEvent extends Document {
     title: string;
