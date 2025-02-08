@@ -6,8 +6,8 @@ import Footer from "@/components/Footer";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Your App Name",
-  description: "Your App Description",
+  title: "MetaProxy",
+  description: "Find your career with MetaProxy!",
 };
 
 export default function RootLayout({
