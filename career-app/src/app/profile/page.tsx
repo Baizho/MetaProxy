@@ -60,7 +60,7 @@ export default function ProfilePage() {
                 {/* Back to Dashboard */}
                 <div className="flex justify-center">
                     <Link
-                        href="/dashboard"
+                        href="/"
                         className="font-medium text-blue-600 hover:text-blue-500"
                     >
                         Back to Dashboard

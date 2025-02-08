@@ -26,11 +26,6 @@ export default function TestPage() {
     const { data: session } = useSession();
 
     useEffect(() => {
-
-        if (!session?.user?.id) {
-            router.push("/auth/login");
-            return;
-        }
         const fetchTest = async () => {
             try {
                 if (!testId) return;

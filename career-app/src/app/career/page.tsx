@@ -13,10 +13,6 @@ export default function CareersPage() {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        if (!session?.user?.id) {
-            router.push("/auth/login");
-            return;
-        }
         const fetchRecommendations = async () => {
             try {
                 if (!session?.user?.id) {
@@ -73,13 +69,13 @@ export default function CareersPage() {
 
     return (
         <div className="p-8">
-            <h1 className="text-2xl font-bold">Your Career Recommendations</h1>
+            <h1 className="text-2xl font-bold mb-4">Your Career Recommendations</h1>
             <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {recommendations.map((profession, index) => (
-                    <li key={index} className="bg-white shadow-md rounded-lg p-4">
+                    <li key={index} className="bg-white shadow-md rounded-xl p-4 hover:scale-105 active:scale-105 transition-all duration-200">
                         <Link href={`/professions/${encodeURIComponent(profession.name)}`}>
-                            {/* <img src={profession.link} alt={profession.name} className="w-full h-48 object-cover rounded-t-lg" /> */}
-                            <img src="human.jpeg" alt={profession.name} className="w-full h-48 object-cover rounded-t-lg" />
+                            <img src={profession.link} alt={profession.name} className="w-full h-48 object-scale-down rounded-xl" />
+                            {/* <img src="human.jpeg" alt={profession.name} className="w-full h-48 object-cover rounded-t-lg" /> */}
                             <p className="mt-2 text-lg font-medium">{profession.name}</p>
                             <p className="mt-2 text-md font-medium">{profession.explanation}</p>
                         </Link>

@@ -32,7 +32,7 @@ export async function POST(req: Request) {
                 },
             },
         });
-
+        console.log(answers);
         return NextResponse.json({ message: 'Test results saved successfully' }, { status: 200 });
     } catch (error) {
         console.error('Error saving test results:', error);

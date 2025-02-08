@@ -1,9 +1,10 @@
 'use client'
 import { useState, useEffect } from "react";
-// import Carousel from "@/components/Carousel";
 import Testimonial from "@/components/Testimonial";
+import { useSession } from 'next-auth/react';
 
 export default function HomePage() {
+  const { data: session } = useSession();
   const [events, setEvents] = useState<any[]>([]);
 
   const testimonials = [
@@ -23,85 +24,79 @@ export default function HomePage() {
       role: "Alumni",
     },
   ];
-
-  useEffect(() => {
-    const fetchEvents = async () => {
-      try {
-        const response = await fetch("/api/events");
-        if (!response.ok) throw new Error("Failed to fetch events");
-        const data = await response.json();
-        setEvents(data);
-      } catch (error) {
-        console.error("Error fetching events:", error);
-      }
-    };
-
-    fetchEvents();
-  }, []);
-
   return (
     <div className="bg-gray-200 min-h-screen">
       {/* Hero Section */}
-      <section className="bg-blue-900 text-gray-200 py-24">
-        <div className="container mx-auto px-4 text-center">
-          <h1 className="text-5xl font-bold mb-6">
-            Welcome to Pro Career
-          </h1>
-          <p className="text-2xl mb-10">
-            Find your path to success with our career guidance tools.
-          </p>
-          <div className="flex space-x-4 justify-center">
-            <a
-              href="/dashboard/student/tests"
-              className="bg-gray-200 text-blue-900 hover:bg-blue-50 font-bold py-3 px-8 rounded-lg transition-all duration-300"
-            >
-              Take a test!
-            </a>
-          </div>
+      <section className="bg-blue-900 text-gray-200 py-24 px-6 text-center">
+        <h1 className="text-5xl font-bold mb-6">Welcome to Pro Career</h1>
+        <p className="text-2xl mb-10">Find your path to success with our career guidance tools.</p>
+        <div className="flex justify-center">
+          {
+            session?.user?.id ? (
+              <a
+                href="/tests"
+                className="bg-gray-200 text-blue-900 hover:bg-blue-50 font-bold py-3 px-8 rounded-lg transition-transform transform hover:scale-105 active:scale-110"
+              >
+                Take a test!
+              </a>
+            ) :
+              (
+
+                <a
+                  href="/auth/login"
+                  className="bg-gray-200 text-blue-900 hover:bg-blue-50 font-bold py-3 px-8 rounded-lg transition-transform transform hover:scale-105 active:scale-110"
+                >
+                  Take a test!
+                </a>
+              )
+          }
         </div>
       </section>
 
       {/* Featured Events */}
-      <section className="py-20">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl font-bold mb-12 text-blue-900">Featured Career Events</h2>
-          {/* {events.length > 0 ? (
-            <Carousel events={events} />
-          ) : ( */}
-          <p className="text-blue-900">No upcoming events available.</p>
-          {/* )} */}
-        </div>
+      <section className="py-20 px-6 text-center">
+        <h2 className="text-3xl font-bold mb-12 text-blue-900">Featured Career Events</h2>
+        <p className="text-blue-900">No upcoming events available.</p>
       </section>
 
-      {/* Testimonials/Success Stories */}
-      <section className="py-20 bg-blue-900 text-gray-200">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl font-bold mb-12">Hear from Our Students</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {testimonials.map((testimonial, index) => (
-              <Testimonial
-                key={index}
-                quote={testimonial.quote}
-                author={testimonial.author}
-                role={testimonial.role}
-              />
-            ))}
-          </div>
+      {/* Testimonials */}
+      <section className="py-20 bg-blue-900 text-gray-200 px-6 text-center">
+        <h2 className="text-3xl font-bold mb-12">Hear from Our Students</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {testimonials.map((testimonial, index) => (
+            <Testimonial
+              key={index}
+              quote={testimonial.quote}
+              author={testimonial.author}
+              role={testimonial.role}
+            />
+          ))}
         </div>
       </section>
 
       {/* Call-to-Action */}
-      <section className="py-20">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl font-bold mb-12 text-blue-900">Explore More</h2>
-          <div className="flex space-x-4 justify-center">
-            <a
-              href="/dashboard/student/tests"
-              className="bg-blue-900 text-white hover:bg-blue-900 font-bold py-3 px-8 rounded-lg transition-all duration-300"
-            >
-              Take a test!
-            </a>
-          </div>
+      <section className="py-20 px-6 text-center">
+        <h2 className="text-3xl font-bold mb-12 text-blue-900">Explore More</h2>
+        <div className="flex justify-center">
+          {
+            session?.user?.id ? (
+              <a
+                href="/tests"
+                className="bg-blue-900 text-white hover:bg-blue-800 font-bold py-3 px-8 rounded-lg transition-transform transform hover:scale-105 active:scale-110"
+              >
+                Take a test!
+              </a>
+            ) :
+              (
+
+                <a
+                  href="/auth/login"
+                  className="bg-blue-900 text-white hover:bg-blue-800 font-bold py-3 px-8 rounded-lg transition-transform transform hover:scale-105 active:scale-110"
+                >
+                  Take a test!
+                </a>
+              )
+          }
         </div>
       </section>
     </div>

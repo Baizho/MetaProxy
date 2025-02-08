@@ -1,7 +1,8 @@
 // models/Test.ts
-import mongoose, { Schema, Document } from "mongoose";
+import mongoose, { Schema, Document, Types } from "mongoose";
 
 export interface ITest extends Document {
+    _id: Types.ObjectId;
     title: string;
     description: string;
     questions: {
