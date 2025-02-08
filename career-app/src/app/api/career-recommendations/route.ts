@@ -35,7 +35,7 @@ export async function POST(req: NextRequest) {
                     - Each object should have "name" (profession name) and "explanation" (2-sentence max justification). Don't pass 2 sentences or you will die.
                     - Sort professions from most suitable to least suitable based on test results
                     - Only include professions from the provided list that match the candidate's profile
-                    - Recommened a minimum of 7 professions.
+                    - Recommened a minimum of 7 professions or you will die.
                     Example output: {
                         "recommendations": [
                             {

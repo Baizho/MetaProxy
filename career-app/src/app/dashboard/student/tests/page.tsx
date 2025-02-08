@@ -11,12 +11,12 @@ export default function StudentDashboard() {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        if (!session?.user?.id) {
-            router.push("/auth/login");
-            return;
-        }
         const fetchTests = async () => {
 
+            if (!session?.user?.id) {
+                router.push("/auth/login");
+                return;
+            }
             try {
                 // Fetch the user's tests via the API
                 const response = await fetch(`/api/user-tests/${session.user.id}`);
@@ -33,7 +33,7 @@ export default function StudentDashboard() {
         };
 
         fetchTests();
-    }, [session]);
+    }, []);
 
     if (loading) return <p>Loading...</p>;
 

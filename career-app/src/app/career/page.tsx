@@ -57,10 +57,6 @@ export default function CareersPage() {
         fetchRecommendations();
     }, []);
 
-    if (!session?.user?.id) {
-        return <p>Please sign in to your account</p>;
-    }
-
     if (loading) return <p>Loading recommendations...</p>;
 
     if (!recommendations.length) {
