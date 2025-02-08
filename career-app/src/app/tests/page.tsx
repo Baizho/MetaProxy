@@ -10,7 +10,6 @@ interface ITest {
 }
 
 export default function TestsPage() {
-    const { data: session } = useSession();
     const [tests, setTests] = useState<ITest[]>([]);
     const [completedTests, setCompletedTests] = useState<string[]>([]);
     const [loading, setLoading] = useState(true);
@@ -39,9 +38,9 @@ export default function TestsPage() {
         };
 
         fetchTests();
-        if (session) fetchCompletedTests();
+        fetchCompletedTests();
         setLoading(false);
-    }, [session]);
+    }, []);
 
     if (loading) return <p>Loading tests...</p>;
 
@@ -49,15 +48,14 @@ export default function TestsPage() {
         <div className="p-8">
             <h1 className="text-2xl font-bold">Available Tests</h1>
             <ul className="mt-4 space-y-4">
-                {tests.map((test) => {
-                    const isCompleted = completedTests.includes(test._id);
-
+                {tests.map((test, index) => {
+                    console.log(completedTests);
                     return (
-                        <li key={test._id} className="bg-white shadow-md rounded-lg p-4">
+                        <li key={index} className="bg-white shadow-md rounded-lg p-4">
                             <h2 className="text-lg font-medium">{test.title}</h2>
                             <p>{test.description}</p>
 
-                            {isCompleted ? (
+                            {completedTests.includes(test._id) ? (
                                 <div className="mt-2 flex items-center space-x-2">
                                     <button className="px-4 py-2 bg-gray-400 text-gray-700 rounded cursor-not-allowed">
                                         Take Test
