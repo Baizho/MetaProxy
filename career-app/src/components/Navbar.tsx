@@ -1,5 +1,6 @@
 'use client';
 import { useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { useSession, signOut } from "next-auth/react";
 import { Menu, X } from "lucide-react";
@@ -17,9 +18,12 @@ export default function Navbar() {
         <nav className="bg-blue-900 text-gray-200 shadow-md">
             <div className="container mx-auto px-4">
                 <div className="flex justify-between items-center h-16">
-                    <Link href="/" className="text-gray-200 text-2xl font-bold hover:text-gray-100 hover:scale-110 active:scale-105 transition-all duration-200">
-                        MetaProxy
-                    </Link>
+                    <div className="flex items-center space-x-2">
+                        <Image src="/icon.jpg" width={35} height={35} alt="icon" className="rounded-lg"></Image>
+                        <Link href="/" className="text-gray-200 text-2xl font-bold hover:text-gray-100 hover:scale-110 active:scale-105 transition-all duration-200">
+                            MetaProxy
+                        </Link>
+                    </div>
 
                     <button
                         className="md:hidden text-gray-200 focus:outline-none hover:scale-110 active:scale-105 transition-all duration-200"

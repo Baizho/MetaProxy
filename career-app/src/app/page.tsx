@@ -28,7 +28,7 @@ export default function HomePage() {
     <div className="bg-gray-200 min-h-screen">
       {/* Hero Section */}
       <section className="bg-blue-900 text-gray-200 py-24 px-6 text-center">
-        <h1 className="text-5xl font-bold mb-6">Welcome to Pro Career</h1>
+        <h1 className="text-5xl font-bold mb-6">Welcome to MetaProxy</h1>
         <p className="text-2xl mb-10">Find your path to success with our career guidance tools.</p>
         <div className="flex justify-center">
           {

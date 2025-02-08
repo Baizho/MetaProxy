@@ -8,7 +8,9 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "MetaProxy",
   description: "Find your career with MetaProxy!",
+  icons: "/icon.jpg", // Path to your favicon
 };
+
 
 export default function RootLayout({
   children,
